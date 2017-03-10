@@ -517,8 +517,10 @@ var snapshotFormatters = {
     delete data.devicePixelRatios;
     
     if(devicePixelRatios.length){
+        var count = 0;
         for(let devicePixelRatio of devicePixelRatios){
-            addRow("diagnostics", "devicePixelRatio", devicePixelRatio);
+            addRow("diagnostics", "devicePixelRatio-window-" + (count+1), devicePixelRatio + " pixel(s) per point");
+            count += 1;
         }
     }
 
