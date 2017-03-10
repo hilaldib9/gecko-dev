@@ -445,7 +445,7 @@ var snapshotFormatters = {
         features.push(feature);
       }
     }
-
+    
     if (features.length) {
       for (let feature of features) {
         let trs = [];
@@ -511,6 +511,15 @@ var snapshotFormatters = {
       }
     } else {
       $("graphics-crashguards-tbody").style.display = "none";
+    }
+
+    let devicePixelRatios = data.devicePixelRatios;
+    delete data.devicePixelRatios;
+    
+    if(devicePixelRatios.length){
+        for(let devicePixelRatio of devicePixelRatios){
+            addRow("diagnostics", "devicePixelRatio", devicePixelRatio);
+        }
     }
 
     // Now that we're done, grab any remaining keys in data and drop them into

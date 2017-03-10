@@ -329,9 +329,11 @@ var dataProviders = {
 
     data.numTotalWindows = 0;
     data.numAcceleratedWindows = 0;
+    data.devicePixelRatios = [];
     let winEnumer = Services.ww.getWindowEnumerator();
     while (winEnumer.hasMoreElements()) {
-      let winUtils = winEnumer.getNext().
+      let win = winEnumer.getNext();
+      let winUtils = win.
                      QueryInterface(Ci.nsIInterfaceRequestor).
                      getInterface(Ci.nsIDOMWindowUtils);
       try {
@@ -347,8 +349,12 @@ var dataProviders = {
       }
       if (data.windowLayerManagerType != "Basic")
         data.numAcceleratedWindows++;
-    }
 
+      let devicePixelRatio = win.QueryInterface(Ci.nsIDOMWindow).devicePixelRatio;
+      data.devicePixelRatios.push(devicePixelRatio);
+      
+    }
+    
     let winUtils = Services.wm.getMostRecentWindow("").
                    QueryInterface(Ci.nsIInterfaceRequestor).
                    getInterface(Ci.nsIDOMWindowUtils)
@@ -394,7 +400,7 @@ var dataProviders = {
       D2DEnabled: "direct2DEnabled",
       DWriteEnabled: "directWriteEnabled",
       DWriteVersion: "directWriteVersion",
-      cleartypeParameters: "clearTypeParameters",
+      cleartypeParameters: "clearTypeParameters"
     };
 
     for (let prop in gfxInfoProps) {
